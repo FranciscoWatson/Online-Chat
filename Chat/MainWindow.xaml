@@ -8,36 +8,16 @@
         Title="Chat App" Height="400" Width="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        
-
-            <!-- Sent Messages -->
-
-
-
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl x:Name="MessagesControl">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="5"
-                                Padding="10"
-                                CornerRadius="10"
-                                MaxWidth="300"
-                                HorizontalAlignment="{Binding Alignment}"
-                                Background="{Binding Background}">
-                                <TextBlock Text="{Binding Text}" />
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox x:Name="MessageTextBox" Width="400" Margin="5" />
-            <Button Content="Send" Width="80" Margin="5" Click="SendMessage_Click" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Button Content="Chatear" Width="80" Margin="5" Click="Chatear_Click" />
+            <Button x:Name="CloseChatButton" Width="80" Margin="5" Content="Close Chat" Click="CloseChatButton_Click" />
         </StackPanel>
+        <Frame x:Name="ChatFrame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
     </Grid>
 </Window>
