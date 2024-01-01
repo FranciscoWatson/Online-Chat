@@ -20,22 +20,37 @@ namespace Chat
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Message> messeges = new List<Message>();
+  
         public MainWindow()
         {
             InitializeComponent();
+            messeges.Add(new Message("Hola", false));
+            messeges.Add(new Message("Como estas?", false));
+            messeges.Add(new Message("Bien", true));
+            messeges.Add(new Message("Yo tambien", false));
+            MessagesControl.ItemsSource = messeges;
+ 
         }
-
+        
+        
         //boton de enviar mensaje
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
             // Get message written in the TextBox
             string message = MessageTextBox.Text;
 
-            // Agregar el mensaje al ListBox (simulado como un nuevo mensaje)
-            ChatListBox.Items.Add($"Tú: {message}");
+            messeges.Add(new Message(message, true));
 
+            // Update the ItemsSource to refresh the display
+            MessagesControl.ItemsSource = null; // Clear the ItemsSource
+            MessagesControl.ItemsSource = messeges; // Set the updated list as ItemsSource
             // Limpiar el TextBox después de enviar el mensaje
             MessageTextBox.Text = string.Empty;
+            
         }
+
+            
+        
     }
 }

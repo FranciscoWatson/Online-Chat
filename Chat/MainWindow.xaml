@@ -11,10 +11,30 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        
 
-        <ListBox x:Name="ChatListBox" Grid.Row="0">
-            <!-- Aquí se mostrarán los mensajes del chat -->
-        </ListBox>
+            <!-- Sent Messages -->
+
+
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="MessagesControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="5"
+                                Padding="10"
+                                CornerRadius="10"
+                                MaxWidth="300"
+                                HorizontalAlignment="{Binding Alignment}"
+                                Background="{Binding Background}">
+                                <TextBlock Text="{Binding Text}" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        
+
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBox x:Name="MessageTextBox" Width="400" Margin="5" />
             <Button Content="Send" Width="80" Margin="5" Click="SendMessage_Click" />
