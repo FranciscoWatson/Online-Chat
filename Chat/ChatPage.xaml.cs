@@ -16,12 +16,12 @@ using System.Windows.Shapes;
 namespace Chat
 {
     /// <summary>
-    /// Interaction logic for SelectedChat.xaml
+    /// Interaction logic for ChatPage.xaml
     /// </summary>
-    public partial class SelectedChat : Page
+    public partial class ChatPage : Page
     {
         List<Message> messeges = new List<Message>();
-        public SelectedChat()
+        public ChatPage()
         {
             InitializeComponent();
             messeges.Add(new Message("Hola", false));
@@ -44,7 +44,13 @@ namespace Chat
             // Limpiar el TextBox después de enviar el mensaje
             MessageTextBox.Text = string.Empty;
         }
-        
 
+        public event EventHandler? ClosePageRequested;
+        private void RequestClosePage() => ClosePageRequested?.Invoke(this, EventArgs.Empty);
+
+        private void CloseMessage_Click(object sender, RoutedEventArgs e)
+        {
+            RequestClosePage();
+        }
     }
 }

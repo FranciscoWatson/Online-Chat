@@ -19,33 +19,38 @@ namespace Chat
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-       
-  
+    {   
         public MainWindow()
-        {
+        {  
             InitializeComponent();
-            ChatsDisponibles chatsDisponibles = new ChatsDisponibles();
-            ChatFrame.NavigationService.Navigate(chatsDisponibles);
+
+            // Se crea Pagina de Login cuando se abre la Ventana Principal
+            LoginPage logginPage = new LoginPage();
+            LoginFrame.NavigationService.Navigate(logginPage);
+            
+            //Si el logeo es excitoso, se cargan los contactos correspondientes por defecto. 
+            logginPage.ChangePageRequested += (sender, args) =>
+            {
+                LoginFrame.Content = null;
+                ContactsPage contacts = new ContactsPage();
+                ContactosFrame.NavigationService.Navigate(contacts);
+
+                // Si el usuario elige un contacto se carga su chat con el contacto
+                contacts.UserContactRequested += (sender, userToContact) =>
+                {
+                    //Acá es cuando se selecciona un contacto y se abre el chat.
+                    MessageBox.Show($"Contacting user: {userToContact}");
+                    ChatPage newChatPage = new ChatPage();
+                    ChatFrame.NavigationService.Navigate(newChatPage);
+                    newChatPage.ClosePageRequested += (sender, args) =>
+                    {
+                        ChatFrame.Content = null;
+                    };
+                };
+
+            };
 
         }
-        
-        
-        //boton de enviar mensaje
-        private void Chatear_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedChat newChatPage = new SelectedChat(); // Crea una nueva instancia de la Page del chat
-                                                           // Agrega la Page del chat al contenedor correspondiente en tu ventana principal
-                                                           // (depende de cómo estés estructurando tu interfaz)
-            ChatFrame.NavigationService.Navigate(newChatPage);
-
-        }
-        private void CloseChatButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChatsDisponibles chatsDisponibles = new ChatsDisponibles();
-            ChatFrame.NavigationService.Navigate(chatsDisponibles);
-        }
-
 
     }
 }

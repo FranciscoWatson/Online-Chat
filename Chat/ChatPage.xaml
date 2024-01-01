@@ -1,4 +1,4 @@
-﻿<Page x:Class="Chat.SelectedChat"
+﻿<Page x:Class="Chat.ChatPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Chat"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SelectedChat">
+      Title="ChatPage">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,9 +33,9 @@
 
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox x:Name="MessageTextBox" Width="400" Margin="5" />
+            <TextBox x:Name="MessageTextBox" Width="300" Margin="5" />
             <Button Content="Send" Width="80" Margin="5" Click="SendMessage_Click" />
-          
+            <Button Content="Close" Width="80" Margin="5" Click="CloseMessage_Click" />
 
         </StackPanel>
     </Grid>
