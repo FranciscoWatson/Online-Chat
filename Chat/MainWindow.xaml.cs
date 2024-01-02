@@ -28,13 +28,7 @@ namespace Chat
         {  
             InitializeComponent();
             this.eventManager = new EventManager();
-
-
-            // Se crea Pagina de Login cuando se abre la Ventana Principal
-            this.loginPage = new LoginPage(eventManager);
-            LoginFrame.NavigationService.Navigate(loginPage);
-
-            eventManager.ContactsRequested += OnContactsRequested;  //Si el logeo es excitoso, se cargan los contactos correspondientes por defecto. 
+            InitializeLogin();
 
 
         }
@@ -43,8 +37,11 @@ namespace Chat
         private void OnContactsRequested(object sender, EventArgs e)
         {
             LoginFrame.Content = null;
-            this.contactsPage = new ContactsPage(eventManager);
-            ContactosFrame.NavigationService.Navigate(contactsPage);
+            if (contactsPage == null)
+            {
+                this.contactsPage = new ContactsPage(eventManager);
+            }
+            ContactsFrame.NavigationService.Navigate(contactsPage);
 
             eventManager.ChatRequested += OnChatRequested;
 
@@ -54,6 +51,7 @@ namespace Chat
         {
             MessageBox.Show($"Contacting user: {userToContact}");
             this.chatPage = new ChatPage(eventManager);
+
             ChatFrame.NavigationService.Navigate(chatPage);
             eventManager.CloseChatRequested += OnCloseChatRequested;
  
@@ -61,6 +59,16 @@ namespace Chat
         private void OnCloseChatRequested(object sender, EventArgs e)
         {
             ChatFrame.Content = null;
+            this.chatPage = null;
+        }
+
+        private void InitializeLogin()
+        {
+            // Se crea Pagina de Login cuando se abre la Ventana Principal
+            this.loginPage = new LoginPage(eventManager);
+            LoginFrame.NavigationService.Navigate(loginPage);
+
+            eventManager.ContactsRequested += OnContactsRequested;  //Si el logeo es excitoso, se cargan los contactos correspondientes por defecto. 
         }
 
 

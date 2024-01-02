@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Frame x:Name="LoginFrame" NavigationUIVisibility="Hidden" Grid.Column="0" Grid.ColumnSpan="21"/>
 
-        <Frame x:Name="ContactosFrame" NavigationUIVisibility="Hidden" Grid.Column="0"/>
+        <Frame x:Name="ContactsFrame" NavigationUIVisibility="Hidden" Grid.Column="0"/>
         <Frame x:Name="ChatFrame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
     </Grid>
 </Window>
