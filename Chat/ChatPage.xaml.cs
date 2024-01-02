@@ -49,7 +49,6 @@ namespace Chat
         {
             // Get message written in the TextBox
             string message = MessageTextBox.Text;
-
             messeges.Add(new Message(message, true));
 
             // Update the ItemsSource to refresh the display

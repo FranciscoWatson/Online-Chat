@@ -35,7 +35,6 @@ namespace Chat
             this.text = text;
             this.isSentByUser = isSentByUser;
             this.background = isSentByUser ? Brushes.LightBlue : Brushes.LightGreen;
-
         }
     }
 }
