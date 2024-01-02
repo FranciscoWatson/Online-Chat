@@ -20,19 +20,22 @@ namespace Chat
     /// </summary>
     public partial class ContactsPage : Page
     {
+        private EventManager eventManager;
+
         public ContactsPage()
         {
             InitializeComponent();
         }
 
+        public ContactsPage(EventManager eventManager)
+        {
+            InitializeComponent();
+            this.eventManager = eventManager;
+        }
+
         public event EventHandler<string>? UserContactRequested;
 
 
-        // Method to trigger the event and pass the user to contact
-        private void OnUserContactRequested(string user)
-        {
-            UserContactRequested?.Invoke(this, user);
-        }
 
         private void Chatear_Click(object sender, RoutedEventArgs e)
         {
@@ -40,9 +43,12 @@ namespace Chat
             string userToContact = "John Doe"; // Replace this with your logic
 
             // Trigger the event by passing the user to contact
-            OnUserContactRequested(userToContact);
+            eventManager.NotifyUserContactRequested(userToContact);
 
         }
+
+            
+  
 
     }
 }

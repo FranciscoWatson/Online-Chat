@@ -21,6 +21,8 @@ namespace Chat
     public partial class ChatPage : Page
     {
         List<Message> messeges = new List<Message>();
+        private EventManager eventManager;
+
         public ChatPage()
         {
             InitializeComponent();
@@ -29,6 +31,18 @@ namespace Chat
             messeges.Add(new Message("Bien", true));
             messeges.Add(new Message("Yo tambien", false));
             MessagesControl.ItemsSource = messeges;
+        }
+
+        public ChatPage(EventManager eventManager)
+        {
+            InitializeComponent();
+            this.eventManager = eventManager;
+            messeges.Add(new Message("Hola", false));
+            messeges.Add(new Message("Como estas?", false));
+            messeges.Add(new Message("Bien", true));
+            messeges.Add(new Message("Yo tambien", false));
+            MessagesControl.ItemsSource = messeges;
+            
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
@@ -45,12 +59,9 @@ namespace Chat
             MessageTextBox.Text = string.Empty;
         }
 
-        public event EventHandler? ClosePageRequested;
-        private void RequestClosePage() => ClosePageRequested?.Invoke(this, EventArgs.Empty);
-
         private void CloseMessage_Click(object sender, RoutedEventArgs e)
         {
-            RequestClosePage();
+            eventManager.NotifyUserCloseChatRequested();
         }
     }
 }

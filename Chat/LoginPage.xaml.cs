@@ -20,12 +20,19 @@ namespace Chat
     /// </summary>
     public partial class LoginPage : Page
     {
+        private EventManager eventManager;
+
         public LoginPage()
         {
             InitializeComponent();
         }
-        public event EventHandler? ChangePageRequested;
-        private void RequestPageChange() => ChangePageRequested?.Invoke(this, EventArgs.Empty);
+
+        public LoginPage(EventManager eventManager)
+        {
+            InitializeComponent();
+            this.eventManager = eventManager;
+        }
+
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (txtUsername.Text == "Usuario")
@@ -64,8 +71,8 @@ namespace Chat
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            
-            RequestPageChange();
+
+            eventManager.NotifyUserContactRequested();
         }
 
         private void txtUsername_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -73,6 +80,6 @@ namespace Chat
           
         }
 
-  
+
     }
 }

@@ -19,38 +19,50 @@ namespace Chat
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {   
+    {
+        private EventManager eventManager;
+        private LoginPage loginPage;
+        private ContactsPage contactsPage;
+        private ChatPage chatPage;
         public MainWindow()
         {  
             InitializeComponent();
+            this.eventManager = new EventManager();
+
 
             // Se crea Pagina de Login cuando se abre la Ventana Principal
-            LoginPage logginPage = new LoginPage();
-            LoginFrame.NavigationService.Navigate(logginPage);
-            
-            //Si el logeo es excitoso, se cargan los contactos correspondientes por defecto. 
-            logginPage.ChangePageRequested += (sender, args) =>
-            {
-                LoginFrame.Content = null;
-                ContactsPage contacts = new ContactsPage();
-                ContactosFrame.NavigationService.Navigate(contacts);
+            this.loginPage = new LoginPage(eventManager);
+            LoginFrame.NavigationService.Navigate(loginPage);
 
-                // Si el usuario elige un contacto se carga su chat con el contacto
-                contacts.UserContactRequested += (sender, userToContact) =>
-                {
-                    //Acá es cuando se selecciona un contacto y se abre el chat.
-                    MessageBox.Show($"Contacting user: {userToContact}");
-                    ChatPage newChatPage = new ChatPage();
-                    ChatFrame.NavigationService.Navigate(newChatPage);
-                    newChatPage.ClosePageRequested += (sender, args) =>
-                    {
-                        ChatFrame.Content = null;
-                    };
-                };
+            eventManager.ContactsRequested += OnContactsRequested;  //Si el logeo es excitoso, se cargan los contactos correspondientes por defecto. 
 
-            };
 
         }
+
+
+        private void OnContactsRequested(object sender, EventArgs e)
+        {
+            LoginFrame.Content = null;
+            this.contactsPage = new ContactsPage(eventManager);
+            ContactosFrame.NavigationService.Navigate(contactsPage);
+
+            eventManager.ChatRequested += OnChatRequested;
+
+        }
+
+        private void OnChatRequested(object sender, string userToContact)
+        {
+            MessageBox.Show($"Contacting user: {userToContact}");
+            this.chatPage = new ChatPage(eventManager);
+            ChatFrame.NavigationService.Navigate(chatPage);
+            eventManager.CloseChatRequested += OnCloseChatRequested;
+ 
+        }
+        private void OnCloseChatRequested(object sender, EventArgs e)
+        {
+            ChatFrame.Content = null;
+        }
+
 
     }
 }
